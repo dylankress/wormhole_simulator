@@ -1,7 +1,6 @@
+#node_mamager.py
 """
-
 This module is responsible for generating all nodes at the begining of the simulation.
-
 """
 
 from sim_node import SimNode

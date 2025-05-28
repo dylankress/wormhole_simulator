@@ -1,7 +1,6 @@
+#sim_node.py
 """
-
 This file defines the node class. It holds all the attributes, behaviors, and methods for a typical wormhole node.
-
 """
 
 class SimNode:
@@ -10,6 +9,8 @@ class SimNode:
         node_id,
         available_storage_space_gb,
         reliability_score,
+        upload_speed,
+        download_speed,
         owned_files,
         is_online,
         hosted_chunks,
@@ -27,6 +28,8 @@ class SimNode:
         self.node_id = node_id   
         self.available_storage_space_gb = available_storage_space_gb
         self.reliability_score = reliability_score
+        self.upload_speed = upload_speed
+        self.download_speed = download_speed
         self.owned_files = owned_files
         self.is_online = is_online
         self.hosted_chunks = hosted_chunks

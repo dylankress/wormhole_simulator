@@ -1,7 +1,6 @@
+#sim_file.py
 """
-
 This file defines the file class. It holds all the attributes, behaviors, and methods for a typical wormhole file.
-
 """
 
 from enum import Enum
