@@ -1,9 +1,8 @@
+#node_manager.py
 """
-
 The network controller is the brain of the wormhole simulation.
 It's the only persistent object in the entire simulation, so it's responsible for keeping track of
 many important data sets and events throughout the course of each simulation.
-
 """
 
 from utils.distribute_chunks import distribute_chunks
