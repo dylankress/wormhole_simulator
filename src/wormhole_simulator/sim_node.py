@@ -6,6 +6,7 @@ All attributes will be passed via node_generator.py
 
 from typing import List
 from sim_file import SimFile
+import random
 
 class SimNode:
     def __init__(
@@ -19,6 +20,7 @@ class SimNode:
         available_storage_space_gb: float,
         available_file_send_limit_gb: float,
         file_send_frequency: int,
+        rng: random.Random,
         ):
 
         self.node_id = node_id
@@ -30,6 +32,8 @@ class SimNode:
         self.available_storage_space_gb = available_storage_space_gb
         self.available_file_send_limit_gb = available_file_send_limit_gb
         self.file_send_frequency = file_send_frequency
+        self.last_upload_tick = -1
+        self.file_creation_frequency = rng.randint(5, 60) * 60
 
     def __repr__(self):
         return (
@@ -41,6 +45,21 @@ class SimNode:
             f"Send Freq: {self.file_send_frequency:.2f}>"
         )
 
-    def upload_file(self):
-        #This function needs to fire periodically based on a frequency range set in the config file. Every x minutes the node should check, do i own any files? If yes proceed, if no do nothing. The if they have a file it should choose one of their files at random and add that file, its chunks, and the file recipient to the file_managr.py chunk_to_file_map.
-        pass
+    # --------------- Upload File ---------------
+
+    def upload_file(self, rng: random.Random, file_manager, current_tick: int):
+        if not self.is_online:
+            return
+
+        if current_tick - self.last_upload_tick < self.file_send_frequency:
+            return
+
+        if not self.owned_files:
+            return
+
+        selected_file = rng.choice(self.owned_files)
+        self.last_upload_tick = current_tick
+        return selected_file
+
+    def should_create_file(self, current_tick: int) -> bool:
+        return current_tick % self.file_creation_frequency == 0

@@ -28,7 +28,7 @@ def generate_node(node_id: str, files: List[SimFile], rng: random.Random) -> Sim
     uptime_score = rng.randint(*UPTIME_SCORE_RANGE)
     available_storage_space_gb = rng.randint(*STORAGE_RANGE_GB)
     available_file_send_limit_gb = rng.uniform(*SEND_LIMIT_RANGE_GB)
-    file_send_frequency = rng.randint(*UPLOAD_FREQUENCY_RANGE)
+    file_send_frequency = rng.randint(*UPLOAD_FREQUENCY_RANGE) * 60
 
     return SimNode(
         node_id=node_id,
@@ -40,6 +40,7 @@ def generate_node(node_id: str, files: List[SimFile], rng: random.Random) -> Sim
         available_storage_space_gb=available_storage_space_gb,
         available_file_send_limit_gb=available_file_send_limit_gb,
         file_send_frequency=file_send_frequency,
+        rng=rng
     )
 
 def generate_nodes(files: List[SimFile], rng_seed: int = 42) -> List[SimNode]:

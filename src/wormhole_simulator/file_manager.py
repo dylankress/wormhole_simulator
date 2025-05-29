@@ -16,6 +16,14 @@ class FileManager:
         self.awaiting_repair: Set[str] = set()
         self.obsolete_chunks: Set[str] = set()
 
+    # --------------- Methods ---------------
+
+    def register_upload_request(self, sim_file: SimFile):
+        # Register each chunk → file mapping
+        for chunk_id in sim_file.chunks:
+            self.chunk_to_file_map[chunk_id] = sim_file
+            self.awaiting_upload.add(chunk_id)
+
     def process_awaiting_upload_list(self):
         pass
 

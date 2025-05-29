@@ -3,43 +3,55 @@
 This is a minimal simulation bootstrapper that verifies core generators are working.
 """
 
-from config import TOTAL_SIMULATED_NODES, RNG_SEED
+from config import TOTAL_SIMULATED_NODES, RNG_SEED, NEW_FILE_CREATION_INTERVAL_MIN
 from utils.node_generator import generate_nodes
-from utils.file_generator import generate_files
 from utils.sim_clock import SimClock
+from file_manager import FileManager
+from utils.file_generator import generate_file
+
+import random
+
+TICKS_TO_RUN = 10000
+PRINT_EVERY = 1  # how often to print tick summary
+NEW_FILE_CREATION_INTERVAL_TICKS = NEW_FILE_CREATION_INTERVAL_MIN * 60
+
 
 def main():
-    # Step 1: Build list of node IDs
+    rng = random.Random(RNG_SEED)
+    file_counter = 0
+    live_files = []
+    # --- Initialization ---
     node_ids = [f"node_{i}" for i in range(TOTAL_SIMULATED_NODES)]
-
-    # Step 2: Generate files (with random recipients from node_ids)
-    files = generate_files(node_ids, rng_seed=RNG_SEED)
-
-    # Step 3: Generate nodes (with random file ownership)
-    nodes = generate_nodes(files, rng_seed=RNG_SEED)
-
-    # Step 4: Initialize the simulation clock
+    nodes = generate_nodes([], rng_seed=RNG_SEED)
     clock = SimClock()
+    file_manager = FileManager()
 
-    # Step 5: Print summary
-    print("=== Wormhole Simulation Initialized ===")
-    print(f"Tick: {clock.current()}")
-    print(f"Total Nodes: {len(nodes)}")
-    print(f"Total Files: {len(files)}")
-    print(f"Total Chunks: {sum(len(f.chunks) for f in files)}")
+    print("=== Wormhole Simulation Started ===")
+    print(f"Running for {TICKS_TO_RUN} ticks...\n")
 
-    print("\n--- Sample Node ---")
-    print(nodes[0])
+    # --- Tick Loop ---
+    for _ in range(TICKS_TO_RUN):
+        current_tick = clock.current()
 
-    print("\n--- Files Owned by Sample Node ---")
-    for f in nodes[0].owned_files:
-        print(f)
+        # Node actions
+        for node in nodes:
+            if node.should_create_file(current_tick):
+                file_id = f"file_{file_counter}"
+                file_counter += 1
+                new_file = generate_file(file_id, node.node_id, rng)
+                node.owned_files.append(new_file)
+                live_files.append(new_file)
 
-    print("\n--- Sample File ---")
-    print(files[0])
+            file = node.upload_file(rng, file_manager, clock.current())
+            if file:
+                file_manager.register_upload_request(file)
 
-    print("\n--- Chunks in Sample File ---")
-    print(sorted(list(files[0].chunks))[:10])  # Print first 10 chunk IDs
+        clock.advance()
+
+    print("\n=== Simulation Finished ===")
+    print(f"Total Ticks: {clock.current()}")
+    print(f"Chunks awaiting upload: {len(file_manager.awaiting_upload)}")
+    print(f"Files in map: {len(set(f.file_id for f in file_manager.chunk_to_file_map.values()))}")
 
 if __name__ == "__main__":
     main()

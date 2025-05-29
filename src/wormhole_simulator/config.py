@@ -5,15 +5,15 @@ Modify these to test different scenarios and network behaviors.
 """
 
 # ----- Network Scale -----
-TOTAL_SIMULATED_NODES = 1000         # Total number of nodes in the network
-TOTAL_SIMULATED_FILES = 100          # Optional: total number of files to generate
+TOTAL_SIMULATED_NODES = 10000         # Total number of nodes in the network
+NEW_FILE_CREATION_INTERVAL_MIN = 20   # average interval between new file creations per node
 
 # ----- Chunk/File Config -----
 CHUNK_SIZE_MB = 10                   # Size of each chunk (MB)
 REPLICATION_FACTOR = 10             # How many times each chunk should be replicated
 FILE_EXPIRATION_TIME_MIN = 30       # When files/chunks expire or become obsolete (simulation time)
 
-FILE_SIZE_RANGE_GB = (1, 100)       # File sizes will be randomly selected from this range
+FILE_SIZE_RANGE_GB = (.1, 50)       # File sizes will be randomly selected from this range
 
 # ----- Transfer Behavior -----
 UPLOAD_FREQUENCY_RANGE = (5, 120) # (minutes) Used to scale how often nodes attempt file uploads
@@ -41,5 +41,5 @@ NETWORK_RELIABILITY_MULTIPLIER = 1.0 # Affects chance of failures during transfe
 SIM_TICK_INTERVAL_SEC = 1.0         # Real time between simulation ticks, for pacing if needed
 
 # ----- Randomization / Determinism -----
-RNG_SEED = 445                        # Seed for reproducible simulation behavior
+RNG_SEED = 236                        # Seed for reproducible simulation behavior
 
