@@ -18,7 +18,7 @@ class SimNode:
         uptime_score: int,
         available_storage_space_gb: float,
         available_file_send_limit_gb: float,
-        file_send_frequency: float,
+        file_send_frequency: int,
         ):
 
         self.node_id = node_id
@@ -38,5 +38,9 @@ class SimNode:
             f"Upload: {self.upload_speed:.1f} Mbps | "
             f"Download: {self.download_speed:.1f} Mbps | "
             f"Files Owned: {len(self.owned_files)}>"
+            f"Send Freq: {self.file_send_frequency:.2f}>"
         )
 
+    def upload_file(self):
+        #This function needs to fire periodically based on a frequency range set in the config file. Every x minutes the node should check, do i own any files? If yes proceed, if no do nothing. The if they have a file it should choose one of their files at random and add that file, its chunks, and the file recipient to the file_managr.py chunk_to_file_map.
+        pass

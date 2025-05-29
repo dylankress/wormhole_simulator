@@ -16,25 +16,22 @@ class FileManager:
         self.awaiting_repair: Set[str] = set()
         self.obsolete_chunks: Set[str] = set()
 
-    def register_file(self):
+    def process_awaiting_upload_list(self):
         pass
 
-    def upload_chunks(self):
+    def process_awaiting_replication_list(self):
         pass
 
-    def replicate_chunks(self):
+    def process_awaiting_repair_list(self):
         pass
 
-    def notify_recipients(self):
+    def process_obsolete_chunks_list(self):
         pass
 
-    def transfer_chunks_to_recipient(self):
+    def process_awaiting_recipient_notify_list(self):
         pass
 
-    def repair_chunks(self):
-        pass
-
-    def delete_obsolete_chunks(self):
+    def process_awaiting_download_list(self):
         pass
 
     def get_file_by_chunk(self):

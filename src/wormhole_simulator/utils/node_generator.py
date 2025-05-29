@@ -13,7 +13,7 @@ from config import (
     UPTIME_SCORE_RANGE,
     STORAGE_RANGE_GB,
     SEND_LIMIT_RANGE_GB,
-    FILE_SEND_FREQUENCY_RANGE,
+    UPLOAD_FREQUENCY_RANGE,
     TOTAL_SIMULATED_NODES,
 )
 
@@ -28,7 +28,7 @@ def generate_node(node_id: str, files: List[SimFile], rng: random.Random) -> Sim
     uptime_score = rng.randint(*UPTIME_SCORE_RANGE)
     available_storage_space_gb = rng.randint(*STORAGE_RANGE_GB)
     available_file_send_limit_gb = rng.uniform(*SEND_LIMIT_RANGE_GB)
-    file_send_frequency = rng.uniform(*FILE_SEND_FREQUENCY_RANGE)
+    file_send_frequency = rng.randint(*UPLOAD_FREQUENCY_RANGE)
 
     return SimNode(
         node_id=node_id,
