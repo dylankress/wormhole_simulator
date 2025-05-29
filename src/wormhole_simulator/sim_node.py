@@ -45,8 +45,6 @@ class SimNode:
             f"Send Freq: {self.file_send_frequency:.2f}>"
         )
 
-    # --------------- Upload File ---------------
-
     def upload_file(self, rng: random.Random, file_manager, current_tick: int):
         if not self.is_online:
             return
