@@ -17,3 +17,12 @@ class SimFile:
         self.file_size_gb = file_size_gb
         self.file_recipient = file_recipient
         self.chunks = chunks
+
+    def __repr__(self):
+        return (
+            f"<SimFile {self.file_id} | "
+            f"Size: {self.file_size_gb:.2f} GB | "
+            f"Chunks: {len(self.chunks)} | "
+            f"Recipient: {self.file_recipient}>"
+        )
+

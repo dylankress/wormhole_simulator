@@ -30,3 +30,13 @@ class SimNode:
         self.available_storage_space_gb = available_storage_space_gb
         self.available_file_send_limit_gb = available_file_send_limit_gb
         self.file_send_frequency = file_send_frequency
+
+    def __repr__(self):
+        return (
+            f"<SimNode {self.node_id} | "
+            f"Online: {self.is_online} | "
+            f"Upload: {self.upload_speed:.1f} Mbps | "
+            f"Download: {self.download_speed:.1f} Mbps | "
+            f"Files Owned: {len(self.owned_files)}>"
+        )
+
