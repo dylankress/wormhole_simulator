@@ -3,6 +3,7 @@
 This file defines the node class. It holds all the attributes, behaviors, and methods for a typical wormhole node.
 All attributes will be passed via node_generator.py
 """
+
 from typing import List
 from sim_file import SimFile
 
@@ -17,6 +18,7 @@ class SimNode:
         uptime_score: int,
         available_storage_space_gb: float,
         available_file_send_limit_gb: float,
+        file_send_frequency: float,
         ):
 
         self.node_id = node_id
@@ -27,4 +29,4 @@ class SimNode:
         self.uptime_score = uptime_score
         self.available_storage_space_gb = available_storage_space_gb
         self.available_file_send_limit_gb = available_file_send_limit_gb
-
+        self.file_send_frequency = file_send_frequency
