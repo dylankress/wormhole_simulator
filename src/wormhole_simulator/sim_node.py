@@ -34,6 +34,8 @@ class SimNode:
         self.file_send_frequency = file_send_frequency
         self.last_upload_tick = -1
         self.file_creation_frequency = rng.randint(5, 60) * 60
+        self.failed_uploads = 0
+        self.total_earned_send_limit_gb = 0.0
 
     def __repr__(self):
         return (
@@ -44,6 +46,11 @@ class SimNode:
             f"Files Owned: {len(self.owned_files)}>"
             f"Send Freq: {self.file_send_frequency:.2f}>"
         )
+
+    def recover_send_limit(self, config_recovery_rate: float):
+        if self.is_online:
+            self.available_file_send_limit_gb += config_recovery_rate
+            self.total_earned_send_limit_gb += config_recovery_rate
 
     # --------------- Upload File ---------------
 
@@ -58,6 +65,13 @@ class SimNode:
             return
 
         selected_file = rng.choice(self.owned_files)
+
+        if selected_file.file_size_gb > self.available_file_send_limit_gb:
+            self.failed_uploads += 1
+            return None
+
+        self.available_file_send_limit_gb -= selected_file.file_size_gb
+
         self.last_upload_tick = current_tick
         return selected_file
 
