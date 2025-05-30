@@ -23,6 +23,7 @@ DOWNLOAD_SPEED_RANGE_MBPS = (20, 150)
 UPTIME_SCORE_RANGE = (1, 100)
 STORAGE_RANGE_GB = (10, 1000)
 SEND_LIMIT_RANGE_GB = (1, 50)
+SEND_LIMIT_RECOVERY_RATE_GB_PER_TICK = 0.004
 
 # ----- File Manager Settings (Minutes) -----
 UPDATE_FILE_MAP_FREQUENCY = .25
@@ -34,11 +35,23 @@ CHECK_DELETE_OBSOLETE_CHUNKS_LIST_FREQUENCY = 5
 CHECK_EXPIRED_FILES_LIST_FREQUENCY = 1
 TRANSFER_CHUNKS_TO_RECIPIENTS_FREQUENCY = 1
 
+# ---- Node Churn Behavior ----
+ONLINE_WEIGHT_EXPONENT = 2.0     # Higher = even more likely to bring high-uptime nodes online
+OFFLINE_WEIGHT_EXPONENT = 2.0    # Higher = even more likely to kick low-uptime nodes offline
+NETWORK_CHURN_MULTIPLIER = 1.0   # 1.0 = baseline 5% churn, 2.0 = 10%, etc.
+
 # ----- Simulation Behavior -----
+<<<<<<< HEAD
 NETWORK_CHURN_MULTIPLIER = 1.0
 NETWORK_RELIABILITY_MULTIPLIER = 1.0
 SIM_TICK_INTERVAL_SEC = 1.0
 
 # ----- Randomization / Determinism -----
 RNG_SEED = 236
+=======
+SIM_TICK_INTERVAL_SEC = 1.0
+
+# ----- Randomization / Determinism -----
+RNG_SEED = 736
+>>>>>>> node_manager
 
